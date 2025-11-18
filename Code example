@@ -1,34 +1,35 @@
 import re
 
 def password_strength(password):
-    # Проверка длины пароля
-    length_score = len(password) >= 8  # Пароль должен быть не менее 8 символов
-    # Проверка наличия цифр, букв и спецсимволов
-    digit_score = bool(re.search(r'\d', password))  # Наличие хотя бы одной цифры
-    lower_score = bool(re.search(r'[a-z]', password))  # Наличие хотя бы одной строчной буквы
-    upper_score = bool(re.search(r'[A-Z]', password))  # Наличие хотя бы одной заглавной буквы
-    special_score = bool(re.search(r'[\W_]', password))  # Наличие хотя бы одного спецсимвола
+    # Check the length of the password
+    length_score = len(password) >= 8  # Password must be at least 8 characters long
     
-    # Проверка на общие пароли (простейшая защита)
+    # Check for digits, letters, and special characters
+    digit_score = bool(re.search(r'\d', password))       # At least one digit
+    lower_score = bool(re.search(r'[a-z]', password))    # At least one lowercase letter
+    upper_score = bool(re.search(r'[A-Z]', password))    # At least one uppercase letter
+    special_score = bool(re.search(r'[\W_]', password))  # At least one special character
+    
+    # Check for common passwords (basic protection)
     common_passwords = ["password", "123456", "qwerty", "admin", "letmein"]
-    common_score = password.lower() not in common_passwords  # Пароль не должен быть в списке общих
+    common_score = password.lower() not in common_passwords  # Password should not be common
     
-    # Суммируем баллы
+    # Sum the scores
     strength = sum([length_score, digit_score, lower_score, upper_score, special_score, common_score])
     
-    # Оценка на основе баллов
+    # Evaluate based on the score
     if strength == 6:
-        return "Очень надежный"
+        return "Very Strong"
     elif strength == 5:
-        return "Надежный"
+        return "Strong"
     elif strength == 4:
-        return "Средний"
+        return "Medium"
     elif strength == 3:
-        return "Слабый"
+        return "Weak"
     else:
-        return "Очень слабый"
+        return "Very Weak"
 
-# Пример использования
+# Example usage
 password = "Passw0rd!"
 strength = password_strength(password)
-print(f"Пароль: {password} - {strength}")
+print(f"Password: {password} - {strength}")
